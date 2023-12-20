@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:tg_v1/src/components/mtg_card_list.dart';
+import 'package:tg_v1/src/models/mtg_card.dart';
 import 'package:tg_v1/src/router.dart';
 
 
@@ -14,13 +16,7 @@ class CardListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("MTG"),
       ),
-      body: Center(
-        child: ElevatedButton(onPressed:(){
-          AutoRouter.of(context).push(CardDetailRoute(id: "test123"),
-          );
-        },
-            child: Text("test"))
-      ),
+      body: const CardList()
     );
   }
 }
