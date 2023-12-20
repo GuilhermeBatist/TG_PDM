@@ -11,7 +11,6 @@ class AppRouter extends _$AppRouter{
   @override
   List<AutoRoute> get routes => [
     AutoRoute(initial: true, path: "/", page: CardListRoute.page ),
-    AutoRoute(path: "/card/:id",page: CardListRoute.page),
-
+    AutoRoute(path: "/card/:id",page: CardDetailRoute.page),
   ];
 }
