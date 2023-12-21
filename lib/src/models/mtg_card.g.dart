@@ -10,18 +10,20 @@ _$MtGCardImpl _$$MtGCardImplFromJson(Map<String, dynamic> json) =>
     _$MtGCardImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      type: json['type'] as String,
+      typeLine: json['typeLine'] as String,
       rarity: json['rarity'] as String,
-      imageUrl: json['imageUrl'] as String?,
-      text: json['text'] as String?,
+      imageUris: (json['imageUris'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      oracleText: json['oracleText'] as String?,
     );
 
 Map<String, dynamic> _$$MtGCardImplToJson(_$MtGCardImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'type': instance.type,
+      'typeLine': instance.typeLine,
       'rarity': instance.rarity,
-      'imageUrl': instance.imageUrl,
-      'text': instance.text,
+      'imageUris': instance.imageUris,
+      'oracleText': instance.oracleText,
     };

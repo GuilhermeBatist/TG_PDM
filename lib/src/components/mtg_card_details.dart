@@ -20,9 +20,9 @@ class CardDetails extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             if (card.imageUrl != null) Image.network(card.imageUrl!),
-            if (card.text != null)
+            if (card.oracleText != null)
               Text(
-                card.text!,
+                card.oracleText!,
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               )

@@ -15,7 +15,7 @@ class MtgCardListProvider extends StateNotifier<List<MtGCard>> {
   }
 
   Future<void> _fetchPage(int page) async {
-    final cards = await MtgService().ListCards(page);
+    final cards = await MtgService().listCards(page);
     pagingController.appendPage(cards, page + 1);
 
     state = [...state, ...cards];

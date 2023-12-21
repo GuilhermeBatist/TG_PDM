@@ -22,10 +22,10 @@ MtGCard _$MtGCardFromJson(Map<String, dynamic> json) {
 mixin _$MtGCard {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+  String get typeLine => throw _privateConstructorUsedError;
   String get rarity => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
-  String? get text => throw _privateConstructorUsedError;
+  Map<String, String>? get imageUris => throw _privateConstructorUsedError;
+  String? get oracleText => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,10 +40,10 @@ abstract class $MtGCardCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String type,
+      String typeLine,
       String rarity,
-      String? imageUrl,
-      String? text});
+      Map<String, String>? imageUris,
+      String? oracleText});
 }
 
 /// @nodoc
@@ -61,10 +61,10 @@ class _$MtGCardCopyWithImpl<$Res, $Val extends MtGCard>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? type = null,
+    Object? typeLine = null,
     Object? rarity = null,
-    Object? imageUrl = freezed,
-    Object? text = freezed,
+    Object? imageUris = freezed,
+    Object? oracleText = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,21 +75,21 @@ class _$MtGCardCopyWithImpl<$Res, $Val extends MtGCard>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      typeLine: null == typeLine
+          ? _value.typeLine
+          : typeLine // ignore: cast_nullable_to_non_nullable
               as String,
       rarity: null == rarity
           ? _value.rarity
           : rarity // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      text: freezed == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
+      imageUris: freezed == imageUris
+          ? _value.imageUris
+          : imageUris // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      oracleText: freezed == oracleText
+          ? _value.oracleText
+          : oracleText // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -105,10 +105,10 @@ abstract class _$$MtGCardImplCopyWith<$Res> implements $MtGCardCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String type,
+      String typeLine,
       String rarity,
-      String? imageUrl,
-      String? text});
+      Map<String, String>? imageUris,
+      String? oracleText});
 }
 
 /// @nodoc
@@ -124,10 +124,10 @@ class __$$MtGCardImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? type = null,
+    Object? typeLine = null,
     Object? rarity = null,
-    Object? imageUrl = freezed,
-    Object? text = freezed,
+    Object? imageUris = freezed,
+    Object? oracleText = freezed,
   }) {
     return _then(_$MtGCardImpl(
       id: null == id
@@ -138,21 +138,21 @@ class __$$MtGCardImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      typeLine: null == typeLine
+          ? _value.typeLine
+          : typeLine // ignore: cast_nullable_to_non_nullable
               as String,
       rarity: null == rarity
           ? _value.rarity
           : rarity // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      text: freezed == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
+      imageUris: freezed == imageUris
+          ? _value._imageUris
+          : imageUris // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      oracleText: freezed == oracleText
+          ? _value.oracleText
+          : oracleText // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -164,11 +164,12 @@ class _$MtGCardImpl extends _MtGCard {
   const _$MtGCardImpl(
       {required this.id,
       required this.name,
-      required this.type,
+      required this.typeLine,
       required this.rarity,
-      this.imageUrl,
-      this.text})
-      : super._();
+      final Map<String, String>? imageUris,
+      this.oracleText})
+      : _imageUris = imageUris,
+        super._();
 
   factory _$MtGCardImpl.fromJson(Map<String, dynamic> json) =>
       _$$MtGCardImplFromJson(json);
@@ -178,17 +179,25 @@ class _$MtGCardImpl extends _MtGCard {
   @override
   final String name;
   @override
-  final String type;
+  final String typeLine;
   @override
   final String rarity;
+  final Map<String, String>? _imageUris;
   @override
-  final String? imageUrl;
+  Map<String, String>? get imageUris {
+    final value = _imageUris;
+    if (value == null) return null;
+    if (_imageUris is EqualUnmodifiableMapView) return _imageUris;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
-  final String? text;
+  final String? oracleText;
 
   @override
   String toString() {
-    return 'MtGCard(id: $id, name: $name, type: $type, rarity: $rarity, imageUrl: $imageUrl, text: $text)';
+    return 'MtGCard(id: $id, name: $name, typeLine: $typeLine, rarity: $rarity, imageUris: $imageUris, oracleText: $oracleText)';
   }
 
   @override
@@ -198,17 +207,19 @@ class _$MtGCardImpl extends _MtGCard {
             other is _$MtGCardImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.type, type) || other.type == type) &&
+            (identical(other.typeLine, typeLine) ||
+                other.typeLine == typeLine) &&
             (identical(other.rarity, rarity) || other.rarity == rarity) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            (identical(other.text, text) || other.text == text));
+            const DeepCollectionEquality()
+                .equals(other._imageUris, _imageUris) &&
+            (identical(other.oracleText, oracleText) ||
+                other.oracleText == oracleText));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, type, rarity, imageUrl, text);
+  int get hashCode => Object.hash(runtimeType, id, name, typeLine, rarity,
+      const DeepCollectionEquality().hash(_imageUris), oracleText);
 
   @JsonKey(ignore: true)
   @override
@@ -228,10 +239,10 @@ abstract class _MtGCard extends MtGCard {
   const factory _MtGCard(
       {required final String id,
       required final String name,
-      required final String type,
+      required final String typeLine,
       required final String rarity,
-      final String? imageUrl,
-      final String? text}) = _$MtGCardImpl;
+      final Map<String, String>? imageUris,
+      final String? oracleText}) = _$MtGCardImpl;
   const _MtGCard._() : super._();
 
   factory _MtGCard.fromJson(Map<String, dynamic> json) = _$MtGCardImpl.fromJson;
@@ -241,13 +252,13 @@ abstract class _MtGCard extends MtGCard {
   @override
   String get name;
   @override
-  String get type;
+  String get typeLine;
   @override
   String get rarity;
   @override
-  String? get imageUrl;
+  Map<String, String>? get imageUris;
   @override
-  String? get text;
+  String? get oracleText;
   @override
   @JsonKey(ignore: true)
   _$$MtGCardImplCopyWith<_$MtGCardImpl> get copyWith =>
