@@ -15,6 +15,9 @@ class CardListTile extends StatelessWidget {
       onTap: (){
         AutoRouter.of(context).push(CardDetailRoute(id: card.id));
       },
+     // onLongPress: (){
+       // AutoRouter.of(context).push(CardCollectorRoute(id: card.id));
+      //},
     );
   }
 }

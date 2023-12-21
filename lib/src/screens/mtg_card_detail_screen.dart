@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tg_v1/src/components/mtg_card_details.dart';
-import 'package:tg_v1/src/components/mtg_card_list.dart';
+//import 'package:tg_v1/src/components/mtg_card_list.dart';
 import 'package:tg_v1/src/providers/mtg_card_detail_provider.dart';
 
 
