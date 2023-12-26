@@ -1,4 +1,4 @@
-name: tg_v1
+name: tg_v2
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -30,17 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  http: ^1.1.0
+  shared_preferences: ^2.0.12
+  path_provider:
+  path: ^1.8.0
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
-  infinite_scroll_pagination: ^4.0.0
-  dio: ^5.3.0
-  flutter_riverpod: ^2.3.6
-  auto_route: ^7.7.1
-  get_it: ^7.6.0
 
 dev_dependencies:
   flutter_test:
@@ -51,13 +50,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
-  build_runner: ^2.4.6
-  freezed: ^2.4.1
-  json_serializable: ^6.7.1
-  auto_route_generator: ^7.2.0
-  intl: ^0.17.0
-  sqflite: ^2.1.0+1
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -72,7 +65,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - rsc/default-cards.json
+     - rsc/bulkdata.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

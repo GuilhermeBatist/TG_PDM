@@ -1,32 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_it/get_it.dart';
-import 'package:tg_v1/src/router.dart';
+import 'package:tg_v2/db_helper.dart';
+import 'package:tg_v2/sttt.dart';
+import 'home_page.dart';
+import 'package:path/path.dart';
 
-final getIt = GetIt.instance;
+void main() async{
 
-void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  await onFirstRun();
 
-  getIt.registerSingleton<AppRouter>(AppRouter());
+  runApp(MaterialApp(home: MyApp(ajudante : db_helper(),)));
 
-  runApp(const ProviderScope(child: MyApp()));
+
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key,required this.ajudante});
 
+  final db_helper ajudante;
+
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
+  voidinitstate(){
+    super.initState();
+    widget.ajudante.createDB();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'MTG trial',
+    return MaterialApp(
+      title: 'As minhas Cartas',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routerConfig: getIt<AppRouter>().config(),
-
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+
+    return MaterialApp(
+      title: 'Minha Coleção de Cartas',
+      home: HomePage(),
+    );
+  }
+}
