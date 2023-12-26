@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 Future<void> readAssetFile() async {
   try {
-    final content = await rootBundle.loadString('assets/rsc/bulkdata.json');
+    final content = await rootBundle.loadString('rsc/bulkdata.json');
     print('File content: $content');
   } catch (e) {
     print('Error loading asset file: $e');
@@ -38,7 +38,7 @@ Future<void> onFirstRun() async {
     // Perform first-time tasks, such as downloading the file
     await readAssetFile();
     final url = 'https://data.scryfall.io/default-cards/default-cards-20231226100502.json';
-    final fileName = 'bulkdata.json';
+    final fileName = 'default-cards/default-cards-20231226100502.json';
 
     await downloadFile(url, fileName);
 

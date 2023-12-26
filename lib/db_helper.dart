@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:tg_v2/mtg_card.dart';
+
+import 'mtg_card.dart';
+
 
 class db_helper{
   final String nameDB = 'colect&build.bd';
