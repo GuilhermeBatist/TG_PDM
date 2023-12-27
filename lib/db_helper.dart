@@ -30,95 +30,30 @@ class db_helper{
     final dataBase = await _db;
     await _db.insert('card', carta.mapear());
   }
-}
 
-class InserirCarta extends StatefulWidget {
-  const InserirCarta({Key? key, required this.helper}) : super(key: key);
+  Future<int> getQuantidadeCarta(String nomeCarta) async {
 
-  final db_helper helper;
+    List<Map<String, dynamic>> result = await _db.query(
+      'mtg_cards',
+      columns: ['qtt'],
+      where: 'name = ?',
+      whereArgs: [nomeCarta],
+    );
 
-  @override
-  State<InserirCarta> createState() => _InserirCartaState();
-}
+    if (result.isNotEmpty) {
+      return result.first['qtt'] as int;
+    } else {
+      return 0;
+    }
+  }
 
-class _InserirCartaState extends State<InserirCarta> {
-  final nameController = TextEditingController();
-  final setnameController = TextEditingController();
-  final qttController = TextEditingController();
+  Future<void> removerCarta(String nomeCarta) async {
 
-  List<String> _autocompleteResults = [];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Inserir Carta"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Campo de Texto com Autocomplete
-            TextField(
-              controller: nameController,
-              onChanged: (value) async {
-                // Chama a função de autocomplete ao digitar
-                List<String> results = await fetchAutocomplete(value);
-                setState(() {
-                  _autocompleteResults = results;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Nome da Carta',
-                hintText: 'Digite o nome da carta',
-              ),
-            ),
-            SizedBox(height: 16),
-            // Lista de Resultados de Autocomplete
-            Expanded(
-              child: ListView.builder(
-                itemCount: _autocompleteResults.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_autocompleteResults[index]),
-                    onTap: () {
-                      // Atualiza o campo de texto com o item selecionado
-                      setState(() {
-                        nameController.text = _autocompleteResults[index];
-                        _autocompleteResults = []; // Limpa os resultados
-                      });
-                    },
-                  );
-                },
-              ),
-            ),
-            // Outros Campos e Botão de Submissão
-            SizedBox(height: 16),
-            TextField(
-              controller: setnameController,
-              decoration: InputDecoration(labelText: 'Nome do Set'),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: qttController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Quantidade'),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // Lógica para adicionar a carta ao banco de dados
-                // Utilize widget.helper para acessar a instância de DbHelper
-                // e adicione a lógica de inserção aqui
-              },
-              child: Text('Adicionar Carta'),
-            ),
-          ],
-        ),
-      ),
+    await _db.delete(
+      'mtg_cards',
+      where: 'name = ?',
+      whereArgs: [nomeCarta],
     );
   }
 }
-
 

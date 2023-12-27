@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
-  await onFirstRun();
+  //await onFirstRun();
 
   runApp(MaterialApp(home: MyApp(ajudante : db_helper(),)));
 

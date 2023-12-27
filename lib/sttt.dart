@@ -1,3 +1,4 @@
+/*
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
@@ -46,7 +47,7 @@ Future<void> onFirstRun() async {
     await prefs.setBool('isFirstRun', false);
   }
 }
-
+*/
 
 
 

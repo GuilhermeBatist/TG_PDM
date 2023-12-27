@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'db_helper.dart';
+
+import 'inserir_carta.dart';
+import 'remover_carta.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -21,7 +25,10 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Adicione a lógica para adicionar carta aqui
+                db_helper dbHelper = db_helper();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>
+                        InserirCarta(helper: dbHelper,)));
                 print('Adicionar Carta');
               },
               child: Text('Adicionar Carta'),
@@ -29,7 +36,10 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Adicione a lógica para remover carta aqui
+                db_helper dbHelper = db_helper();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>
+                        RemoverCarta(helper: dbHelper,)));
                 print('Remover Carta');
               },
               child: Text('Remover Carta'),
