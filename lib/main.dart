@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tg_v2/db_helper.dart';
-import 'package:tg_v2/sttt.dart';
+import 'package:tg_v1/db_helper.dart';
+import 'package:tg_v1/sttt.dart';
 import 'home_page.dart';
 import 'package:path/path.dart';
 
