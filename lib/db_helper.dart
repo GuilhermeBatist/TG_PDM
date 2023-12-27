@@ -35,7 +35,7 @@ class db_helper{
 class InserirCarta extends StatefulWidget {
   const InserirCarta({Key? key, required this.helper}) : super(key: key);
 
-  final DbHelper helper;
+  final db_helper helper;
 
   @override
   State<InserirCarta> createState() => _InserirCartaState();
@@ -97,7 +97,7 @@ class _InserirCartaState extends State<InserirCarta> {
             SizedBox(height: 16),
             TextField(
               controller: setnameController,
-              decoration: InputDecoration(labelText: 'Nome do Conjunto'),
+              decoration: InputDecoration(labelText: 'Nome do Set'),
             ),
             SizedBox(height: 16),
             TextField(
@@ -121,16 +121,4 @@ class _InserirCartaState extends State<InserirCarta> {
   }
 }
 
-class DbHelper {
-  // Implemente sua lógica do banco de dados aqui
-  // ...
 
-  // Exemplo de método de autocomplete (pode variar dependendo do seu banco de dados)
-  Future<List<String>> fetchAutocomplete(String query) async {
-    // Lógica para recuperar resultados de autocomplete do banco de dados
-    // ...
-
-    // Retorne uma lista de resultados
-    return [];
-  }
-}
