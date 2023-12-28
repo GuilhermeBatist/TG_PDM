@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'api_helper.dart';
 import 'db_helper.dart';
+import 'mtg_card.dart';
 
 class InserirCarta extends StatefulWidget {
   const InserirCarta({Key? key, required this.helper}) : super(key: key);
@@ -17,6 +18,7 @@ class _InserirCartaState extends State<InserirCarta> {
   final nameController = TextEditingController();
   final setnameController = TextEditingController();
   final qttController = TextEditingController();
+  late MtgCard carta;
 
   List<String> _autocompleteResults = [];
 
@@ -79,10 +81,15 @@ class _InserirCartaState extends State<InserirCarta> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                // Lógica para adicionar a carta ao banco de dados
-                // Utilize widget.helper para acessar a instância de DbHelper
-                // e adicione a lógica de inserção aqui
+              onPressed: () => {
+                carta = MtgCard(
+                  id: ,
+                  name: nameController.text,
+                  set_name: setnameController.text,
+                  qtt: int.parse(qttController.text),
+                  //imgURI:
+                )
+                widget.helper.inserirCarta(carta),
               },
               child: Text('Adicionar Carta'),
             ),

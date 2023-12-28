@@ -10,7 +10,7 @@ class MtgCard{
     required this.name,
     required this.qtt,
     required this.set_name,
-    required this.imgURI
+    //required this.imgURI
 });
 
   Map<String, dynamic> mapear(){
@@ -19,7 +19,7 @@ class MtgCard{
       'name':name,
       'qtt':qtt,
       'set_name': set_name,
-      'imgURI': imgURI,
+      //'imgURI': imgURI,
     };
   }
 }

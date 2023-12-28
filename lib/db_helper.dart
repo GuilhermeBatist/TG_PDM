@@ -22,10 +22,10 @@ class db_helper{
 
   Future createTables(Database bd,int versao) async{
     await bd.execute(
-      'CREATE TABLE cartas(id TEXT PRIMARY KEY,name TEXT, qtt INTEGER,set_name TEXT,imgURI TEXT)'
+      'CREATE TABLE cartas(id TEXT PRIMARY KEY,name TEXT, qtt INTEGER,set_name TEXT)'
     );
   }
-
+  //imgURI TEXT
   Future<void> inserirCarta(MtgCard carta) async {
     final dataBase = await _db;
     await _db.insert('card', carta.mapear());
