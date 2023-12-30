@@ -1,12 +1,16 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'api_helper.dart';
 import 'db_helper.dart';
+import 'json_helper.dart';
 import 'mtg_card.dart';
 
 class InserirCarta extends StatefulWidget {
   const InserirCarta({Key? key, required this.helper}) : super(key: key);
+
 
   final db_helper helper;
 
@@ -15,10 +19,12 @@ class InserirCarta extends StatefulWidget {
 }
 
 class _InserirCartaState extends State<InserirCarta> {
+
   final nameController = TextEditingController();
   final setnameController = TextEditingController();
   final qttController = TextEditingController();
   late MtgCard carta;
+  late  List<Map<String, dynamic>> results;
 
   List<String> _autocompleteResults = [];
 
@@ -38,7 +44,7 @@ class _InserirCartaState extends State<InserirCarta> {
               controller: nameController,
               onChanged: (value) async {
                 // Chama a função de autocomplete ao digitar
-                List<String> results = await fetchAutocomplete(value);
+                List<String> results = await fetchAutocomplete(nameController.text);
                 setState(() {
                   _autocompleteResults = results;
                 });
@@ -81,15 +87,19 @@ class _InserirCartaState extends State<InserirCarta> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => {
-                carta = MtgCard(
-                  id: ,
-                  name: nameController.text,
-                  set_name: setnameController.text,
-                  qtt: int.parse(qttController.text),
-                  //imgURI:
-                )
-                widget.helper.inserirCarta(carta),
+              onPressed: () async => {
+                results = await CardSearch.searchCards(nameController.text, setnameController.text),
+                if(results.isNotEmpty)
+                  carta = MtgCard(
+                      id: results[0]['id'],
+                      name: nameController.text,
+                      set_name: setnameController.text,
+                      qtt: int.parse(qttController.text),
+                      imgURI: results[0]['normal']
+                  ),
+                  widget.helper.inserirCarta(carta),
+
+
               },
               child: Text('Adicionar Carta'),
             ),
@@ -100,4 +110,25 @@ class _InserirCartaState extends State<InserirCarta> {
   }
 }
 
+class ExtractedCardInfo {
+  final String id;
+  final String name;
+  final String set_name;
+  final String normal;
 
+  ExtractedCardInfo({
+    required this.id,
+    required this.name,
+    required this.set_name,
+    required this.normal,
+  });
+
+  factory ExtractedCardInfo.fromJson(Map<String, dynamic> json) {
+    return ExtractedCardInfo(
+      id: json['id'],
+      name: json['name'],
+      set_name: json['set_name'],
+      normal: json['image_uris']['normal'], // Assumindo que a chave 'normal' está em 'image_uris'
+    );
+  }
+}

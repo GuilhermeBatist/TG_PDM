@@ -47,6 +47,34 @@ Future<void> onFirstRun() async {
     await prefs.setBool('isFirstRun', false);
   }
 }
+
+
+
+import mysql.connector
+
+# Replace these values with your MySQL database credentials
+db_config = {
+    'host': '192.168.100.14',
+    'user': 'User_BD_PL3_05',
+    'password': 'diubi:2023!BD!PL3_05',
+    'database': 'BD_PL3_05'
+}
+
+# Connect to the MySQL database
+connection = mysql.connector.connect(**db_config)
+
+# Create a cursor object
+cursor = connection.cursor()
+
+# Execute SQL commands
+cursor.execute('''CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), age INT)''')
+cursor.execute("INSERT INTO users (name, age) VALUES (%s, %s)", ('John Doe', 30))
+
+# Commit the changes and close the connection
+connection.commit()
+connection.close()
+
+
 */
 
 

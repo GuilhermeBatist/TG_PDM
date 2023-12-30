@@ -1,13 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tg_v1/db_helper.dart';
-import 'package:tg_v1/sttt.dart';
 import 'home_page.dart';
-import 'package:path/path.dart';
+import 'json_helper.dart';
 
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   //await onFirstRun();
+
+
 
   runApp(MaterialApp(home: MyApp(ajudante : db_helper(),)));
 

@@ -4,6 +4,7 @@ import 'db_helper.dart';
 import 'inserir_carta.dart';
 import 'remover_carta.dart';
 
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
