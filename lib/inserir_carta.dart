@@ -1,9 +1,7 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'api_helper.dart';
+import 'api_helper_cardname.dart';
+import 'api_helper_setname.dart';
 import 'db_helper.dart';
 import 'json_helper.dart';
 import 'mtg_card.dart';
@@ -26,10 +24,12 @@ class _InserirCartaState extends State<InserirCarta> {
   late MtgCard carta;
   late  List<Map<String, dynamic>> results;
 
-  List<String> _autocompleteResults = [];
+  List<String> _autocompleteResultsCN = [];
+  List<String> _autocompleteResultsSet = [];
 
   @override
   Widget build(BuildContext context) {
+    String name;
     return Scaffold(
       appBar: AppBar(
         title: Text("Inserir Carta"),
@@ -44,9 +44,9 @@ class _InserirCartaState extends State<InserirCarta> {
               controller: nameController,
               onChanged: (value) async {
                 // Chama a função de autocomplete ao digitar
-                List<String> results = await fetchAutocomplete(nameController.text);
+                List<String> results = await fetchAutocompleteCardName(nameController.text);
                 setState(() {
-                  _autocompleteResults = results;
+                  _autocompleteResultsCN = results;
                 });
               },
               decoration: InputDecoration(
@@ -58,15 +58,15 @@ class _InserirCartaState extends State<InserirCarta> {
             // Lista de Resultados de Autocomplete
             Expanded(
               child: ListView.builder(
-                itemCount: _autocompleteResults.length,
+                itemCount: _autocompleteResultsCN.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(_autocompleteResults[index]),
+                    title: Text(_autocompleteResultsCN[index]),
                     onTap: () {
                       // Atualiza o campo de texto com o item selecionado
                       setState(() {
-                        nameController.text = _autocompleteResults[index];
-                        _autocompleteResults = []; // Limpa os resultados
+                        nameController.text = _autocompleteResultsCN[index];
+                        _autocompleteResultsCN = []; // Limpa os resultados
                       });
                     },
                   );
@@ -77,9 +77,33 @@ class _InserirCartaState extends State<InserirCarta> {
             SizedBox(height: 16),
             TextField(
               controller: setnameController,
+              onChanged: (value) async {
+                // Chama a função de autocomplete ao digitar
+                List<String> results = await fetchSetNames(nameController.text);
+                setState(() {
+                  _autocompleteResultsSet = results;
+                });
+              },
               decoration: InputDecoration(labelText: 'Nome do Set'),
             ),
             SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _autocompleteResultsSet.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(_autocompleteResultsSet[index]),
+                    onTap: () {
+                      // Atualiza o campo de texto com o item selecionado
+                      setState(() {
+                        nameController.text = _autocompleteResultsSet[index];
+                        _autocompleteResultsSet = []; // Limpa os resultados
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
             TextField(
               controller: qttController,
               keyboardType: TextInputType.number,

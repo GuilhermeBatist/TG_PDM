@@ -2,12 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class AutocompleteWidget extends StatefulWidget {
+class AutocompleteWidgetName extends StatefulWidget {
   @override
-  _AutocompleteWidgetState createState() => _AutocompleteWidgetState();
+  _AutocompleteWidgetStateSetName createState() => _AutocompleteWidgetStateSetName();
 }
 
-class _AutocompleteWidgetState extends State<AutocompleteWidget> {
+Future<List<String>> fetchAutocomplete(String query) async {
+  final response = await http.get(Uri.parse('https://api.scryfall.com/cards/autocomplete?q=$query'));
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> data = json.decode(response.body);
+    final List<dynamic>  suggeestions = data['data'];
+    return List<String>.from(suggeestions);
+  } else {
+    throw Exception('Failed to fetch autocomplete data');
+  }
+}
+
+class _AutocompleteWidgetStateSetName extends State<AutocompleteWidgetName> {
   final TextEditingController _controller = TextEditingController();
   List<String> _autocompleteResults = [];
 
@@ -52,24 +64,23 @@ class _AutocompleteWidgetState extends State<AutocompleteWidget> {
       ],
     );
   }
+
 }
 
-Future<List<String>> fetchAutocomplete(String query) async {
-  final response = await http.get(Uri.parse('https://api.scryfall.com/cards/autocomplete?q=$query'));
+Future<List<String>> fetchSetNames(String cardName) async {
+  final response = await http.get(Uri.parse('https://api.scryfall.com/cards/named?exact=$cardName'));
 
   if (response.statusCode == 200) {
-    final Map<String, dynamic> data = json.decode(response.body);
-    final List<dynamic>  suggeestions = data['data'];
-    return List<String>.from(suggeestions);
-  } else {
-    throw Exception('Failed to fetch autocomplete data');
-  }
-}
+    final Map<String, dynamic> cardData = json.decode(response.body);
 
-void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
-      body: AutocompleteWidget(),
-    ),
-  ));
+    // Check if the card is found
+    if (cardData['object'] == 'card') {
+      final List<dynamic> sets = cardData['prints'];
+      return List<String>.from(sets.map((set) => set['set_name']));
+    } else {
+      throw Exception('Card not found');
+    }
+  } else {
+    throw Exception('Failed to fetch set names');
+  }
 }

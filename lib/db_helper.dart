@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'api_helper.dart';
+import 'api_helper_cardname.dart';
 import 'mtg_card.dart';
 
 
