@@ -68,7 +68,7 @@ class _AutocompleteWidgetStateSetName extends State<AutocompleteWidgetName> {
 }
 
 Future<List<String>> fetchSetNames(String cardName) async {
-  final response = await http.get(Uri.parse('https://api.scryfall.com/cards/named?exact=$cardName'));
+  final response = await http.get(Uri.parse('https://scryfall.com/search?as=grid&order=released&q=%21"$cardName"+include%3Aextras&unique=prints'));
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> cardData = json.decode(response.body);

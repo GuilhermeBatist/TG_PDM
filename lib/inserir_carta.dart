@@ -44,7 +44,7 @@ class _InserirCartaState extends State<InserirCarta> {
               controller: nameController,
               onChanged: (value) async {
                 // Chama a função de autocomplete ao digitar
-                List<String> results = await fetchAutocompleteCardName(nameController.text);
+                List<String> results = await fetchAutocompleteCardName(value);
                 setState(() {
                   _autocompleteResultsCN = results;
                 });
@@ -77,6 +77,7 @@ class _InserirCartaState extends State<InserirCarta> {
             SizedBox(height: 16),
             TextField(
               controller: setnameController,
+
               onChanged: (value) async {
                 // Chama a função de autocomplete ao digitar
                 List<String> results = await fetchSetNames(nameController.text);
@@ -96,7 +97,7 @@ class _InserirCartaState extends State<InserirCarta> {
                     onTap: () {
                       // Atualiza o campo de texto com o item selecionado
                       setState(() {
-                        nameController.text = _autocompleteResultsSet[index];
+                        setnameController.text = _autocompleteResultsSet[index];
                         _autocompleteResultsSet = []; // Limpa os resultados
                       });
                     },

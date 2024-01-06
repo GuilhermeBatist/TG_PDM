@@ -12,6 +12,7 @@ class RemoverCarta extends StatefulWidget {
 
 class _RemoverCartaState extends State<RemoverCarta> {
   final nameController = TextEditingController();
+  final setController = TextEditingController();
   final qttController = TextEditingController();
 
   @override
@@ -34,6 +35,14 @@ class _RemoverCartaState extends State<RemoverCarta> {
               ),
             ),
             SizedBox(height: 16),
+            TextField(
+              controller: setController,
+              decoration: InputDecoration(
+                labelText: 'Set da Carta',
+                hintText: 'Digite o nome da carta',
+              ),
+            ),
+            SizedBox(height: 16),
             // Campo de Texto para a Quantidade a Remover
             TextField(
               controller: qttController,
@@ -48,6 +57,7 @@ class _RemoverCartaState extends State<RemoverCarta> {
             ElevatedButton(
               onPressed: () async {
                 String nomeCarta = nameController.text;
+                String setNome = setController.text;
                 int quantidadeRemover = int.tryParse(qttController.text) ?? 0;
 
                 if (quantidadeRemover > 0) {
@@ -56,7 +66,7 @@ class _RemoverCartaState extends State<RemoverCarta> {
 
                   if (quantidadeRemover == quantidadeAtual) {
                     // Remover a carta se a quantidade a remover for igual à quantidade atual
-                    await widget.helper.removerCarta(nomeCarta);
+                    await widget.helper.removerCarta(nomeCarta,setNome);
                     // Exibir mensagem de sucesso ou navegar para outra tela, se necessário
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

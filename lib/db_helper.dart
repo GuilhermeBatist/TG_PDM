@@ -47,13 +47,17 @@ class db_helper{
     }
   }
 
-  Future<void> removerCarta(String nomeCarta) async {
-
+  Future<void> removerCarta(String nomeCarta, String nomeSet) async {
     await _db.delete(
       'mtg_cards',
-      where: 'name = ?',
-      whereArgs: [nomeCarta],
+      where: 'name = ? AND set_name = ?', // Adiciona a condição do set_name
+      whereArgs: [nomeCarta, nomeSet],
     );
+  }
+
+  Future<List<Map<String, dynamic>>> getListaCompletaCartas() async {
+    List<Map<String, dynamic>> cartas = await _db.query('mtg_cards');
+    return cartas;
   }
 }
 
