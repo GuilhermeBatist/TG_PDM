@@ -3,7 +3,7 @@ import 'db_helper.dart';
 
 import 'inserir_carta.dart';
 import 'remover_carta.dart';
-
+import 'mostrar_cartas.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -18,7 +18,10 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                // Adicione a lógica para mostrar a coleção aqui
+                DbHelper dbHelper = DbHelper();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>
+                        MostrarCartas(helper: dbHelper,)));
                 print('Mostrar Coleção');
               },
               child: Text('Mostrar Coleção'),
@@ -26,7 +29,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                db_helper dbHelper = db_helper();
+                DbHelper dbHelper = DbHelper();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>
                         InserirCarta(helper: dbHelper,)));
@@ -37,7 +40,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                db_helper dbHelper = db_helper();
+                DbHelper dbHelper = DbHelper();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>
                         RemoverCarta(helper: dbHelper,)));

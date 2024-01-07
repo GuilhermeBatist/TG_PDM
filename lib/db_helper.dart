@@ -6,13 +6,13 @@ import 'api_helper_cardname.dart';
 import 'mtg_card.dart';
 
 
-class db_helper{
+class DbHelper{
   final String nameDB = 'colect&build.bd';
   final int versionDB = 1;
 
   late Database _db;
 
-  createDB()async{
+  Future<void> createDB() async{
     _db = await openDatabase(
       join(await getDatabasesPath(),nameDB),
       onCreate: createTables,
@@ -20,21 +20,24 @@ class db_helper{
     );
   }
 
-  Future createTables(Database bd,int versao) async{
+  Future<void> createTables(Database bd,int versao) async{
     await bd.execute(
-      'CREATE TABLE cartas(id TEXT PRIMARY KEY,name TEXT, qtt INTEGER,set_name TEXT)'
+      'CREATE TABLE cartas(id TEXT PRIMARY KEY,name TEXT, qtt INTEGER,set_name TEXT, img_URI TEXT)'
     );
   }
+
   //imgURI TEXT
-  Future<void> inserirCarta(MtgCard carta) async {
-    final dataBase = await _db;
-    await _db.insert('card', carta.mapear());
+  Future<void> inserirCarta(MtgCard cartas) async {
+    await createDB();
+    final dataBase = _db;
+    await dataBase.insert('cartas', cartas.mapear());
   }
 
   Future<int> getQuantidadeCarta(String nomeCarta) async {
-
-    List<Map<String, dynamic>> result = await _db.query(
-      'mtg_cards',
+    await createDB();
+    final dataBase = _db;
+    List<Map<String, dynamic>> result = await dataBase.query(
+      'cartas',
       columns: ['qtt'],
       where: 'name = ?',
       whereArgs: [nomeCarta],
@@ -48,15 +51,29 @@ class db_helper{
   }
 
   Future<void> removerCarta(String nomeCarta, String nomeSet) async {
-    await _db.delete(
-      'mtg_cards',
+    await createDB();
+    final dataBase = _db;
+    await dataBase.delete(
+      'cartas',
       where: 'name = ? AND set_name = ?', // Adiciona a condição do set_name
       whereArgs: [nomeCarta, nomeSet],
     );
   }
 
+  Future<void> atualizarCarta(String nomeCarta, String nomeSet, int qtt) async {
+    await createDB();
+    final dataBase = _db;
+    await dataBase.rawUpdate('''
+      UPDATE cartas
+      SET qtt = ?,
+      WHERE name = ? AND set_name = ?''',
+     [qtt,nomeCarta, nomeSet]);
+  }
+
   Future<List<Map<String, dynamic>>> getListaCompletaCartas() async {
-    List<Map<String, dynamic>> cartas = await _db.query('mtg_cards');
+    await createDB();
+    final dataBase = _db;
+    List<Map<String, dynamic>> cartas = await dataBase.query('cartas');
     return cartas;
   }
 }

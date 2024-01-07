@@ -33,8 +33,10 @@ class CardSearch {
     // URL da API do Scryfall para buscar cartas por nome
     String apiUrl = 'https://api.scryfall.com/cards/search';
 
+    final encodedCardName = Uri.encodeComponent(searchName).replaceAll('%20', '+');
+    final encodedSetName = Uri.encodeComponent(searchSetName).replaceAll('%20', '+');
     // Parâmetros de pesquisa
-    String queryString = 'q=$searchName set:$searchSetName';
+    String queryString = 'q=$encodedCardName set:$encodedSetName';
 
     // Monta a URL final
     String fullUrl = '$apiUrl?$queryString';

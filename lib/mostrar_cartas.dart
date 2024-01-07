@@ -9,7 +9,7 @@ import 'mtg_card.dart';
 class MostrarCartas extends StatefulWidget{
   const MostrarCartas({Key? key, required this.helper}) : super(key: key);
 
-  final db_helper helper;
+  final DbHelper helper;
 
   @override
   State<MostrarCartas> createState() => _MostrarCartaState();
@@ -18,8 +18,14 @@ class MostrarCartas extends StatefulWidget{
 class _MostrarCartaState extends State<MostrarCartas> {
   List<Map<String, dynamic>> listaCartas = [];
 
+  @override
+  void initState(){
+    super.initState();
+    fetchCards();
+  }
   fetchCards() async{
     listaCartas = await widget.helper.getListaCompletaCartas();
+    setState(() {}); // Trigger a rebuild after fetching data
   }
   @override
   Widget build(BuildContext context) {
@@ -30,45 +36,26 @@ class _MostrarCartaState extends State<MostrarCartas> {
         body: ListView.builder(
           itemCount: listaCartas.length,
           itemBuilder: (context, index) {
-            return getBody();
-          })
+            return getCard(listaCartas[index]);
+          },
+        ),
     );
   }
-  Widget getBody(){
-    return ListView.builder(
-        itemCount: listaCartas.length,
-        itemBuilder: (context, index){
 
-          return getCard(listaCartas[index]);
-        });
-  }
-  Widget getCard(item){
+  Widget getCard(item) {
     var name = item['name'];
     var set = item['set_name'];
     return Card(
-        child: ListTile(
-          title: Row(
-            children: <Widget>[
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.purple
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width-140,
-                      child: Text(name,style: TextStyle(fontSize: 17),)),
-                  SizedBox(height: 10,),
-                  Text(set.toString(),style: TextStyle(color: Colors.grey),)
-                ],
-              )
-            ],
-          )
-        )
+      child: ListTile(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(name, style: const TextStyle(fontSize: 17)),
+            const SizedBox(height: 10),
+            Text(set.toString(), style: const TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
     );
   }
 }

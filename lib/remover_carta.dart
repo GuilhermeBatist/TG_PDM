@@ -4,7 +4,7 @@ import 'package:tg_v1/db_helper.dart';
 class RemoverCarta extends StatefulWidget {
   const RemoverCarta({Key? key, required this.helper}) : super(key: key);
 
-  final db_helper helper;
+  final DbHelper helper;
 
   @override
   _RemoverCartaState createState() => _RemoverCartaState();
@@ -73,7 +73,17 @@ class _RemoverCartaState extends State<RemoverCarta> {
                         content: Text('Carta removida com sucesso'),
                       ),
                     );
-                  } else {
+                  } else if (quantidadeRemover < quantidadeAtual){
+                    // Alterar quantidade de cartas
+                    int qtt = quantidadeAtual - quantidadeRemover;
+                    await widget.helper.atualizarCarta(nomeCarta,setNome,qtt);
+                    // Exibir mensagem de sucesso ou navegar para outra tela, se necessário
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Carta removida com sucesso'),
+                        ),
+                    );
+                  }else{
                     // Exibir mensagem se a quantidade a remover não for igual à quantidade atual
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

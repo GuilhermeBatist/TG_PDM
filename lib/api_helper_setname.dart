@@ -57,8 +57,7 @@ class _AutocompleteWidgetStateSetName extends State<AutocompleteWidgetName> {
 
 Future<List<String>> fetchSetNames(String cardName) async {
   String base = 'https://api.scryfall.com/cards/search?order=cmc&q=%21';
-  final encodedCardName = Uri.encodeComponent(cardName);
-  print(encodedCardName);
+  final encodedCardName = Uri.encodeComponent(cardName).replaceAll('%20', '+');
   final response = await http.get(
     Uri.parse('$base"$encodedCardName"++include%3Aextras&unique=prints'),
   );

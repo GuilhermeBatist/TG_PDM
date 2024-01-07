@@ -7,22 +7,15 @@ import 'home_page.dart';
 import 'json_helper.dart';
 
 void main() async{
-
   WidgetsFlutterBinding.ensureInitialized();
   //await onFirstRun();
-
-
-
-  runApp(MaterialApp(home: MyApp(ajudante : db_helper(),)));
-
-
+  runApp(MaterialApp(home: MyApp(ajudante : DbHelper(),)));
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key,required this.ajudante});
 
-  final db_helper ajudante;
-
+  final DbHelper ajudante;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -31,7 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
-  voidinitstate(){
+  void initState(){
     super.initState();
     widget.ajudante.createDB();
   }

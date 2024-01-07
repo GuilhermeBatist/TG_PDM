@@ -19,7 +19,7 @@ class MtgCard{
       'name':name,
       'qtt':qtt,
       'set_name': set_name,
-      'imgURI': imgURI,
+      'img_URI': imgURI,
     };
   }
 }

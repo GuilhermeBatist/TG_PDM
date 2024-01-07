@@ -59,8 +59,8 @@ Future<List<String>> fetchAutocompleteCardName(String query) async {
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> data = json.decode(response.body);
-    final List<dynamic>  suggeestions = data['data'];
-    return List<String>.from(suggeestions);
+    final List<dynamic>  suggestions = data['data'];
+    return List<String>.from(suggestions);
   } else {
     throw Exception('Failed to fetch autocomplete data');
   }

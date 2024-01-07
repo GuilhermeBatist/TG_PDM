@@ -10,7 +10,7 @@ class InserirCarta extends StatefulWidget {
   const InserirCarta({Key? key, required this.helper}) : super(key: key);
 
 
-  final db_helper helper;
+  final DbHelper helper;
 
   @override
   State<InserirCarta> createState() => _InserirCartaState();
@@ -34,7 +34,7 @@ class _InserirCartaState extends State<InserirCarta> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Inserir Carta"),
+        title: const Text("Inserir Carta"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -51,12 +51,12 @@ class _InserirCartaState extends State<InserirCarta> {
                   _autocompleteResultsCN = results;
                 });
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Nome da Carta',
                 hintText: 'Digite o nome da carta',
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Lista de Resultados de Autocomplete
             Expanded(
               child: ListView.builder(
@@ -80,7 +80,7 @@ class _InserirCartaState extends State<InserirCarta> {
               ),
             ),
             // Outros Campos e Botão de Submissão
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: setnameController,
               onChanged: (value) async {
@@ -91,9 +91,9 @@ class _InserirCartaState extends State<InserirCarta> {
                   print(nameController.text);
                 });
               },
-              decoration: InputDecoration(labelText: 'Nome do Set'),
+              decoration: const InputDecoration(labelText: 'Nome do Set'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
                 itemCount: _autocompleteResultsSet.length,
@@ -114,25 +114,24 @@ class _InserirCartaState extends State<InserirCarta> {
             TextField(
               controller: qttController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Quantidade'),
+              decoration: const InputDecoration(labelText: 'Quantidade'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async => {
                 results = await CardSearch.searchCards(nameController.text, setnameController.text),
                 if(results.isNotEmpty)
+                  print(results),
                   carta = MtgCard(
                       id: results[0]['id'],
                       name: nameController.text,
                       set_name: setnameController.text,
                       qtt: int.parse(qttController.text),
-                      imgURI: results[0]['normal']
+                      imgURI: results[0]['image_uris']['normal']
                   ),
                   widget.helper.inserirCarta(carta),
-
-
               },
-              child: Text('Adicionar Carta'),
+              child: const Text('Adicionar Carta'),
             ),
           ],
         ),
