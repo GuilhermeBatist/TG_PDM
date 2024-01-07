@@ -55,27 +55,12 @@ class _AutocompleteWidgetStateSetName extends State<AutocompleteWidgetName> {
 
 }
 
-/*Future<List<String>> fetchSetNames(String cardName) async {
-  final response = await http.get(Uri.parse('https://api.scryfall.com/cards/named?exact=$cardName'));
-
-  if (response.statusCode == 200) {
-    final Map<String, dynamic> cardData = json.decode(response.body);
-
-    // Check if the card is found
-    if (cardData['object'] == 'card') {
-      final List<dynamic> sets = cardData['prints'];
-      return List<String>.from(sets.map((set) => set['set_name']));
-    } else {
-      throw Exception('Card not found');
-    }
-  } else {
-    throw Exception('Failed to fetch set names');
-  }
-}*/
-
 Future<List<String>> fetchSetNames(String cardName) async {
+  String base = 'https://api.scryfall.com/cards/search?order=cmc&q=%21';
+  final encodedCardName = Uri.encodeComponent(cardName);
+  print(encodedCardName);
   final response = await http.get(
-    Uri.parse('https://api.scryfall.com/cards/named?exact=$cardName'),
+    Uri.parse('$base"$encodedCardName"++include%3Aextras&unique=prints'),
   );
 
   if (response.statusCode == 200) {
@@ -98,3 +83,32 @@ Future<List<String>> fetchSetNames(String cardName) async {
     return [];
   }
 }
+
+
+
+/*  Future<List<String>> fetchSetNames(String cardName) async {
+    String base ='https://api.scryfall.com/cards/named?exact=';
+    final response = await http.get(
+      Uri.parse('https://api.scryfall.com/cards/named?exact=$cardName'),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+
+      // Verifica se a chave 'prints' está presente na resposta
+      if (data.containsKey('prints')) {
+        final List<dynamic> printings = data['prints'];
+
+        // Mapeia as informações do conjunto para 'set_name'
+        return List<String>.from(printings.map((printing) => printing['set_name']));
+      } else {
+        // Caso 'prints' não esteja presente na resposta
+        print('No information about sets found for the given card.');
+        return [];
+      }
+    } else {
+      // Handle error
+      print('Failed to load set names');
+      return [];
+    }
+  }*/

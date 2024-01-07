@@ -85,11 +85,10 @@ class _InserirCartaState extends State<InserirCarta> {
               controller: setnameController,
               onChanged: (value) async {
                 // Chama a função de autocomplete ao digitar
-                String encodedText = Uri.encodeComponent(nameController.text);
-                List<String> results = await fetchSetNames(encodedText);
+                List<String> results = await fetchSetNames(nameController.text);
                 setState(() {
                   _autocompleteResultsSet = results;
-                  print(encodedText);
+                  print(nameController.text);
                 });
               },
               decoration: InputDecoration(labelText: 'Nome do Set'),
