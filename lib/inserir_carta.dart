@@ -23,13 +23,15 @@ class _InserirCartaState extends State<InserirCarta> {
   final qttController = TextEditingController();
   late MtgCard carta;
   late  List<Map<String, dynamic>> results;
+  late String name='';
+  bool  empty = true;
 
   List<String> _autocompleteResultsCN = [];
   List<String> _autocompleteResultsSet = [];
 
   @override
   Widget build(BuildContext context) {
-    String name;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Inserir Carta"),
@@ -59,14 +61,18 @@ class _InserirCartaState extends State<InserirCarta> {
             Expanded(
               child: ListView.builder(
                 itemCount: _autocompleteResultsCN.length,
-                itemBuilder: (context, index) {
+                itemBuilder: (context1, index1) {
                   return ListTile(
-                    title: Text(_autocompleteResultsCN[index]),
+                    title: Text(_autocompleteResultsCN[index1]),
                     onTap: () {
                       // Atualiza o campo de texto com o item selecionado
                       setState(() {
-                        nameController.text = _autocompleteResultsCN[index];
-                        _autocompleteResultsCN = []; // Limpa os resultados
+                        nameController.text = _autocompleteResultsCN[index1];
+                        _autocompleteResultsCN = [];// Limpa os resultados
+                        if (empty = true){
+                          name = nameController.text;
+                          empty = false;
+                        }
                       });
                     },
                   );
@@ -77,12 +83,13 @@ class _InserirCartaState extends State<InserirCarta> {
             SizedBox(height: 16),
             TextField(
               controller: setnameController,
-
               onChanged: (value) async {
                 // Chama a função de autocomplete ao digitar
-                List<String> results = await fetchSetNames(nameController.text);
+                String encodedText = Uri.encodeComponent(nameController.text);
+                List<String> results = await fetchSetNames(encodedText);
                 setState(() {
                   _autocompleteResultsSet = results;
+                  print(encodedText);
                 });
               },
               decoration: InputDecoration(labelText: 'Nome do Set'),
@@ -91,13 +98,13 @@ class _InserirCartaState extends State<InserirCarta> {
             Expanded(
               child: ListView.builder(
                 itemCount: _autocompleteResultsSet.length,
-                itemBuilder: (context, index) {
+                itemBuilder: (context2, index2) {
                   return ListTile(
-                    title: Text(_autocompleteResultsSet[index]),
+                    title: Text(_autocompleteResultsSet[index2]),
                     onTap: () {
                       // Atualiza o campo de texto com o item selecionado
                       setState(() {
-                        setnameController.text = _autocompleteResultsSet[index];
+                        setnameController.text = _autocompleteResultsSet[index2];
                         _autocompleteResultsSet = []; // Limpa os resultados
                       });
                     },

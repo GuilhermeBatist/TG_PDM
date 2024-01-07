@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 
 class ExtractedCardInfo {
@@ -24,27 +25,41 @@ class ExtractedCardInfo {
     );
   }
 }
-  class CardSearch {
-    static Future<List<Map<String, dynamic>>> searchCards(
+
+
+class CardSearch {
+  static Future<List<Map<String, dynamic>>> searchCards(
       String searchName, String searchSetName) async {
-    // Caminho para o arquivo JSON dentro da pasta 'assets'
-      String jsonPath = 'assets/cards.json'; // Substitua pelo caminho real
+    // URL da API do Scryfall para buscar cartas por nome
+    String apiUrl = 'https://api.scryfall.com/cards/search';
 
-    // Lê o conteúdo do arquivo JSON usando rootBundle
-    String jsonString = await rootBundle.loadString(jsonPath);
+    // Parâmetros de pesquisa
+    String queryString = 'q=$searchName set:$searchSetName';
 
-    // Converte o JSON em uma lista de mapas
-    List<Map<String, dynamic>> cards =
-    List<Map<String, dynamic>>.from(json.decode(jsonString));
+    // Monta a URL final
+    String fullUrl = '$apiUrl?$queryString';
+
+    // Faz a solicitação HTTP para a API do Scryfall
+    var response = await http.get(Uri.parse(fullUrl));
 
     // Lista para armazenar resultados da pesquisa
     List<Map<String, dynamic>> searchResults = [];
 
-    // Itera sobre os objetos no JSON e verifica as condições de pesquisa
-    for (var card in cards) {
-      if (card['name'] == searchName && card['set_name'] == searchSetName) {
+    // Verifica se a solicitação foi bem-sucedida (código de status 200)
+    if (response.statusCode == 200) {
+      // Converte a resposta JSON em um mapa
+      Map<String, dynamic> data = json.decode(response.body);
+
+      // Obtém a lista de cartas a partir do mapa
+      List<Map<String, dynamic>> cards = List<Map<String, dynamic>>.from(data['data']);
+
+      // Itera sobre os objetos no JSON e verifica as condições de pesquisa
+      for (var card in cards) {
         searchResults.add(card);
       }
+    } else {
+      // Se a solicitação não foi bem-sucedida, você pode lidar com isso conforme necessário
+      print('Erro na solicitação: ${response.statusCode}');
     }
 
     return searchResults;
