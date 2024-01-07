@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'api_helper_cardname.dart';
 import 'mtg_card.dart';
-
 
 class DbHelper{
   final String nameDB = 'colect&build.bd';
@@ -65,7 +61,7 @@ class DbHelper{
     final dataBase = _db;
     await dataBase.rawUpdate('''
       UPDATE cartas
-      SET qtt = ?,
+      SET qtt = ?
       WHERE name = ? AND set_name = ?''',
      [qtt,nomeCarta, nomeSet]);
   }

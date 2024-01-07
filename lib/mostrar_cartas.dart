@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'api_helper_cardname.dart';
-import 'api_helper_setname.dart';
 import 'db_helper.dart';
-import 'json_helper.dart';
-import 'mtg_card.dart';
 
 class MostrarCartas extends StatefulWidget{
   const MostrarCartas({Key? key, required this.helper}) : super(key: key);
@@ -45,14 +41,15 @@ class _MostrarCartaState extends State<MostrarCartas> {
   Widget getCard(item) {
     var name = item['name'];
     var set = item['set_name'];
+    var qtt = item['qtt'];
     return Card(
       child: ListTile(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(name, style: const TextStyle(fontSize: 17)),
-            const SizedBox(height: 10),
-            Text(set.toString(), style: const TextStyle(color: Colors.grey)),
+            Text(name , style: const TextStyle(fontSize: 19)),
+            Text(set.toString(), style: const TextStyle(color: Colors.blueAccent)),
+            Text(qtt.toString(), style: const TextStyle(color: Colors.redAccent)),
           ],
         ),
       ),

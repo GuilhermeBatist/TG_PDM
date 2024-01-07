@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-
 
 class ExtractedCardInfo {
   final String id;
@@ -26,7 +24,6 @@ class ExtractedCardInfo {
   }
 }
 
-
 class CardSearch {
   static Future<List<Map<String, dynamic>>> searchCards(
       String searchName, String searchSetName) async {
@@ -36,7 +33,7 @@ class CardSearch {
     final encodedCardName = Uri.encodeComponent(searchName).replaceAll('%20', '+');
     final encodedSetName = Uri.encodeComponent(searchSetName).replaceAll('%20', '+');
     // Parâmetros de pesquisa
-    String queryString = 'q=$encodedCardName set:$encodedSetName';
+    String queryString = 'q=$encodedCardName&set=$encodedSetName';
 
     // Monta a URL final
     String fullUrl = '$apiUrl?$queryString';

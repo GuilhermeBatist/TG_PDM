@@ -57,18 +57,19 @@ class _AutocompleteWidgetStateSetName extends State<AutocompleteWidgetName> {
 
 Future<List<String>> fetchSetNames(String cardName) async {
   String base = 'https://api.scryfall.com/cards/search?order=cmc&q=%21';
-  final encodedCardName = Uri.encodeComponent(cardName).replaceAll('%20', '+');
+  String encodedCardName = Uri.encodeComponent(cardName).replaceAll('%20', '+');
+  final encoded = encodedCardName.replaceAll("'", "%27");
+  print(encoded);
   final response = await http.get(
-    Uri.parse('$base"$encodedCardName"++include%3Aextras&unique=prints'),
+    Uri.parse('$base"$encoded"++include%3Aextras&unique=prints'),
   );
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> data = json.decode(response.body);
 
     // Verifica se a chave 'prints' está presente na resposta
-    if (data.containsKey('prints')) {
-      final List<dynamic> printings = data['prints'];
-
+    if (data.containsKey('total_cards')) {
+      final List<dynamic> printings = data['data'];
       // Mapeia as informações do conjunto para 'set_name'
       return List<String>.from(printings.map((printing) => printing['set_name']));
     } else {
